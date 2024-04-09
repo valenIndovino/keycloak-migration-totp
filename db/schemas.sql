@@ -1,0 +1,2 @@
+CREATE SCHEMA keycloak1;
+CREATE SCHEMA keycloak2;

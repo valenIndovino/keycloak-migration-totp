@@ -1,0 +1,55 @@
+version: "3"
+services:
+  keycloak1:
+    container_name: keycloak1
+    image: quay.io/keycloak/keycloak:19.0.3-legacy
+    restart: always
+    ports:
+      - "8080:8080"
+    environment:
+      DB_VENDOR: postgres
+      DB_ADDR: db
+      DB_PORT: 5432
+      DB_DATABASE: keycloak_db
+      DB_USER: user_db
+      DB_PASSWORD: password_db
+      DB_SCHEMA: keycloak1
+      KEYCLOAK_USER: admin
+      KEYCLOAK_PASSWORD: admin
+      JAVA_OPTS_APPEND: -Dkeycloak.profile.feature.admin2=disabled
+    # volumes:
+      # - "./custom-scripts/:/opt/jboss/custom-scripts/"
+      # - "./objects/:/opt/jboss/keycloak/objects/"
+      # - "./startup-scripts/:/opt/jboss/startup-scripts/"
+  keycloak2:
+    container_name: keycloak2
+    image: quay.io/keycloak/keycloak:19.0.3-legacy
+    restart: always
+    ports:
+      - "8082:8080"
+    environment:
+      DB_VENDOR: postgres
+      DB_ADDR: db
+      DB_PORT: 5432
+      DB_DATABASE: keycloak_db
+      DB_USER: user_db
+      DB_PASSWORD: password_db
+      DB_SCHEMA: keycloak2
+      KEYCLOAK_USER: admin
+      KEYCLOAK_PASSWORD: admin
+      JAVA_OPTS_APPEND: -Dkeycloak.profile.feature.admin2=disabled
+    # volumes:
+      # - "./custom-scripts/:/opt/jboss/custom-scripts/"
+      # - "./objects/:/opt/jboss/keycloak/objects/"
+      # - "./startup-scripts/:/opt/jboss/startup-scripts/"
+  db:
+    image: postgres:15.1
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_DB: keycloak_db
+      POSTGRES_USER: user_db
+      POSTGRES_PASSWORD: password_db
+    volumes:
+      - ./db/:/docker-entrypoint-initdb.d/

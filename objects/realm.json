@@ -1,0 +1,11 @@
+{
+    "id": "restusers",
+    "realm": "restusers",
+    "displayName": "Agustin Scian Forte",
+    "enabled": true,
+    "registrationAllowed": true,
+    "loginTheme": "custom",
+    "accountTheme": "custom",
+    "adminTheme": "keycloak",
+    "emailTheme": "keycloak"
+}
